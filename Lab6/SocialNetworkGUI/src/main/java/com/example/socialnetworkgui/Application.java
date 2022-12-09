@@ -19,6 +19,7 @@ public class Application extends javafx.application.Application {
         stage.setScene(scene);
         LoginController loginController = fxmlLoader.getController();
         loginController.setNetwork(network);
+        fasfsaf
         stage.show();
     }
 
