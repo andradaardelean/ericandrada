@@ -44,19 +44,49 @@ public class Network implements Observable<FriendshipEntityChangeEvent> {
         throw new ValidationException("Username or password incorrect!");
     }
 
+    public void sendRequest(User user) throws ValidationException, RepositoryException {
+        List<Friendship> friendships = getAllFriendships();
+        for(Friendship fr : friendships){
+            if(fr.getU1().equals(currentUser) && fr.getU2().equals(user)){
+                throw new ValidationException("Request already sent!");
+            }
+        }
+        Friendship fr = new Friendship(currentUser,user);
+        System.out.println(fr);
+        friendshipsRepo.add(fr);
+        notifyObservers(new FriendshipEntityChangeEvent(ChangeEventType.ADD, fr));
+    }
+
     public List<User> getAllFriends(){
         List<User> friends = new ArrayList<>();
         for(Friendship fr : friendshipsRepo.getAll()){
-            System.out.println( friendshipsRepo.getAll());
-            System.out.println( currentUser.getUsername());
+            //System.out.println( friendshipsRepo.getAll());
+            //System.out.println( currentUser.getUsername());
             if(fr.getU1().getUsername().equals(currentUser.getUsername()) ||
                     fr.getU2().getUsername().equals(currentUser.getUsername()) && !fr.getPending()){
-                if(fr.getU1().getUsername().equals(currentUser.getUsername()))
-                    friends.add(fr.getU2());
-                else friends.add(fr.getU1());
+                if(!fr.getU1().getUsername().equals(currentUser.getUsername()))
+                    friends.add(fr.getU1());
+                else friends.add(fr.getU2());
             }
         }
         return friends;
+    }
+
+    public List<User> getAllNonFriends(){
+        List<User> nonFriends = new ArrayList<>();
+        Boolean ok = true;
+        List<User> friends = getAllFriends();
+        for(User user : usersRepo.getAll()){
+           for(User u : friends){
+               if(user.equals(u)){
+                   ok = false;
+               }
+           }
+           if(ok == true && !user.equals(currentUser))
+               nonFriends.add(user);
+           ok = true;
+        }
+        return nonFriends;
     }
 
 

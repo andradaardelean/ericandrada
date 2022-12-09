@@ -15,7 +15,7 @@
           <TableColumn fx:id="emailColumn" minWidth="4.800048828125" prefWidth="144.800048828125" text="Email" />
         </columns>
       </TableView>
-      <Button fx:id="buttonAdd" layoutX="420.0" layoutY="178.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="104.0" style="-fx-background-color: pink;" text="Add Friend">
+      <Button fx:id="buttonAdd" layoutX="420.0" layoutY="178.0" mnemonicParsing="false" onAction="#onAddFriend" prefHeight="43.0" prefWidth="104.0" style="-fx-background-color: pink;" text="Add Friend">
          <font>
             <Font size="14.0" />
          </font>

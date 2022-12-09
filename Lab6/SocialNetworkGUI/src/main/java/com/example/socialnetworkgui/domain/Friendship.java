@@ -20,6 +20,12 @@ public class Friendship implements HasID<Set<String>>, Serializable {
         this.pending = pending;
     }
 
+    public Friendship(User u1, User u2){
+        this.u1 = u1;
+        this.u2 = u2;
+        this.date = LocalDateTime.now();
+    }
+
     public User getU1() {
         return u1;
     }
