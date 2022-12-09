@@ -147,12 +147,22 @@ public class FriendshipRepositoryDB implements Repository<Friendship, Set<String
 
 
 
-    public void update(String id, User newUser) {
-        for (Friendship f : getAll()) {
-            if (f.getU1().getID().equals(id))
-                f.setU1(newUser);
-            if (f.getU2().getID().equals(id))
-                f.setU2(newUser);
+    public void update(Friendship frnd, Friendship newFrnd) {
+        String sql = "update friendships set username1 = ?, username2 = ?, date = ?, status = ? where username1=? and username2=?";
+        try(Connection connection = DriverManager.getConnection(url,username,password);
+        PreparedStatement ps = connection.prepareStatement(sql)){
+            ps.setString(1,newFrnd.getU1().getUsername());
+            ps.setString(2, newFrnd.getU2().getUsername());
+
+            Date sqlDate = Date.valueOf(newFrnd.getDate().toLocalDate());
+            ps.setDate(3, sqlDate);
+            ps.setBoolean(4,newFrnd.getPending());
+            ps.setString(5,frnd.getU1().getUsername());
+            ps.setString(6,frnd.getU2().getUsername());
+
+            ps.executeUpdate();
+        }catch (SQLException e){
+            e.printStackTrace();
         }
     }
 }

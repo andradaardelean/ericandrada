@@ -57,6 +57,28 @@ public class Network implements Observable<FriendshipEntityChangeEvent> {
         notifyObservers(new FriendshipEntityChangeEvent(ChangeEventType.ADD, fr));
     }
 
+    public List<User> getAllRequests(){
+        List<User> requests = new ArrayList<>();
+        for(Friendship fr : friendshipsRepo.getAll()){
+            if(fr.getU2().equals(currentUser) && fr.getPending()){
+                requests.add(fr.getU1());
+            }
+        }
+        return requests;
+    }
+
+    public void acceptRequest(User user){
+        List<Friendship> friendships = getAllFriendships();
+        for(Friendship fr : friendships){
+            if(fr.getU1().equals(user) && fr.getPending()){
+                Friendship newFrnd = new Friendship(fr.getU1(),fr.getU2(),fr.getDate(),false);
+                friendshipsRepo.update(fr,newFrnd);
+                notifyObservers(new FriendshipEntityChangeEvent(ChangeEventType.ADD,newFrnd));
+                break;
+            }
+        }
+    }
+
     public List<User> getAllFriends(){
         List<User> friends = new ArrayList<>();
         for(Friendship fr : friendshipsRepo.getAll()){
@@ -247,7 +269,7 @@ public class Network implements Observable<FriendshipEntityChangeEvent> {
         User newUser = new User(newUsername, newPassword, newEmail);
         userVal.validate(newUser);
         usersRepo.update(id, newUsername, newPassword, newEmail);
-        friendshipsRepo.update(id,newUser);
+        //friendshipsRepo.update(id,newUser);
     }
 
 

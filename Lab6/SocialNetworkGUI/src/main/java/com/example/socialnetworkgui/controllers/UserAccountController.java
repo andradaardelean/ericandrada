@@ -84,4 +84,20 @@ public class UserAccountController implements Observer<FriendshipEntityChangeEve
             labelErrors.setText(e.getMessage());
         }
     }
+
+    public void onRequest(){
+        try{
+            FXMLLoader requestLoader = new FXMLLoader(Application.class.getResource("Requests.fxml"));
+            Stage stage = new Stage();
+            stage.setScene(new Scene(requestLoader.load()));
+            stage.setTitle("Requests");
+            RequestsController requestsController = requestLoader.getController();
+            requestsController.setNetwork(network);
+            stage.show();
+            System.out.println("adsads");
+        } catch(Exception e){
+            labelErrors.setText(e.getMessage());
+            System.out.println(e.getMessage());
+        }
+    }
 }

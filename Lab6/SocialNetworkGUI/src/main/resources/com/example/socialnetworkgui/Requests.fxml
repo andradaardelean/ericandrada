@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="requests" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.socialnetworkgui.controllers.RequestsController">
+   <children>
+      <TableView fx:id="tableViewRequests" layoutX="53.0" layoutY="71.0" prefHeight="257.0" prefWidth="298.0">
+        <columns>
+          <TableColumn fx:id="usernameField" prefWidth="149.5999755859375" text="username" />
+          <TableColumn fx:id="emailField" prefWidth="148.00006103515625" text="email" />
+        </columns>
+      </TableView>
+      <Button fx:id="buttonAccept" layoutX="408.0" layoutY="115.0" mnemonicParsing="false" onAction="#onAcceptRequest" prefHeight="49.0" prefWidth="132.0" style="-fx-background-color: pink;" text="Accept request">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="buttonDecline" layoutX="408.0" layoutY="225.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="132.0" style="-fx-background-color: pink;" text="Decline request">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>
