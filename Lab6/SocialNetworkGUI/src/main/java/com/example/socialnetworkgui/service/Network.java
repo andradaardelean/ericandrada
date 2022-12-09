@@ -60,6 +60,17 @@ public class Network implements Observable<FriendshipEntityChangeEvent> {
     public List<User> getAllFriends(){
         List<User> friends = new ArrayList<>();
         for(Friendship fr : friendshipsRepo.getAll()){
+            boolean hadFr = (fr.getU1().equals(currentUser) || fr.getU2().equals(currentUser));
+            if(hadFr){
+                if(!fr.getPending()) {
+                    if (fr.getU1().equals(currentUser)) {
+                        friends.add(fr.getU2());
+                    } else {
+                        friends.add(fr.getU1());
+                    }
+                }
+            }
+            /*
             //System.out.println( friendshipsRepo.getAll());
             //System.out.println( currentUser.getUsername());
             if(fr.getU1().getUsername().equals(currentUser.getUsername()) ||
@@ -68,6 +79,8 @@ public class Network implements Observable<FriendshipEntityChangeEvent> {
                     friends.add(fr.getU1());
                 else friends.add(fr.getU2());
             }
+
+             */
         }
         return friends;
     }
