@@ -3,8 +3,10 @@ package com.example.socialnetworkgui.controllers;
 import com.example.socialnetworkgui.Application;
 import com.example.socialnetworkgui.domain.User;
 import com.example.socialnetworkgui.service.Network;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -24,10 +26,11 @@ public class LoginController {
 
     public void setNetwork(Network network){this.network = network;}
     @FXML
-    protected void logIn(){
+    protected void logIn(ActionEvent actionEvent){
         try{
             String username = usernameField.getText();
             String password = passwordField.getText();
+            //network = new Network();
             User loggedUser = network.verifyUser(username, password);
             network.setCurrentUser(loggedUser);
 
@@ -46,6 +49,7 @@ public class LoginController {
             userAccountController.setNetwork(network);
 
             stage.show();
+            ((Node)(actionEvent.getSource())).getScene().getWindow().hide();
         } catch (Exception e){
             labelLogInErrors.setText(e.getMessage());
             usernameField.clear();
@@ -65,7 +69,8 @@ public class LoginController {
             signUpController.setNetwork(network);
             stage.show();
         }catch (Exception e){
-            labelLogInErrors.setText(e.getMessage());
+            System.out.println(e.getMessage());
+            //labelLogInErrors.setText(e.getMessage());
         }
     }
 }

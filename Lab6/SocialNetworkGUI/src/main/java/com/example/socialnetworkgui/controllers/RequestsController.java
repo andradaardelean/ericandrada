@@ -1,6 +1,7 @@
 package com.example.socialnetworkgui.controllers;
 
 import com.example.socialnetworkgui.domain.User;
+import com.example.socialnetworkgui.exceptions.RepositoryException;
 import com.example.socialnetworkgui.service.Network;
 import com.example.socialnetworkgui.utils.events.FriendshipEntityChangeEvent;
 import com.example.socialnetworkgui.utils.observer.Observable;
@@ -36,6 +37,7 @@ public class RequestsController implements Observer<FriendshipEntityChangeEvent>
     public void initialize(){
         usernameColumn.setCellValueFactory(new PropertyValueFactory<User,String>("username"));
         emailColumn.setCellValueFactory(new PropertyValueFactory<User, String>("email"));
+        System.out.println("dadasdsd");
         tableViewRequests.setItems(model);
     }
 
@@ -51,6 +53,11 @@ public class RequestsController implements Observer<FriendshipEntityChangeEvent>
     public void onAcceptRequest(){
         User selected = tableViewRequests.getSelectionModel().getSelectedItem();
         network.acceptRequest(selected);
+    }
+
+    public void onDeclineRequest() throws RepositoryException {
+        User selected = tableViewRequests.getSelectionModel().getSelectedItem();
+        network.declineRequest(selected);
     }
 
 }

@@ -44,6 +44,10 @@ public class Network implements Observable<FriendshipEntityChangeEvent> {
         throw new ValidationException("Username or password incorrect!");
     }
 
+    public void disconnectUser(){
+        this.currentUser = null;
+    }
+
     public void sendRequest(User user) throws ValidationException, RepositoryException {
         List<Friendship> friendships = getAllFriendships();
         for(Friendship fr : friendships){
@@ -74,6 +78,18 @@ public class Network implements Observable<FriendshipEntityChangeEvent> {
                 Friendship newFrnd = new Friendship(fr.getU1(),fr.getU2(),fr.getDate(),false);
                 friendshipsRepo.update(fr,newFrnd);
                 notifyObservers(new FriendshipEntityChangeEvent(ChangeEventType.ADD,newFrnd));
+                break;
+            }
+        }
+    }
+
+    public void declineRequest(User user) throws RepositoryException {
+        List<Friendship> friendships = getAllFriendships();
+        for(Friendship fr : friendships){
+            if(fr.getU1().equals(user) && fr.getPending()){
+                Friendship delete = new Friendship(fr.getU1(), fr.getU2(), fr.getDate(), true);
+                friendshipsRepo.remove(delete);
+                notifyObservers(new FriendshipEntityChangeEvent(ChangeEventType.ADD,delete));
                 break;
             }
         }

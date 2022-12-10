@@ -3,13 +3,15 @@ package com.example.socialnetworkgui.controllers;
 import com.example.socialnetworkgui.Application;
 import com.example.socialnetworkgui.service.Network;
 import com.example.socialnetworkgui.utils.events.FriendshipEntityChangeEvent;
-import com.example.socialnetworkgui.utils.observer.Observable;
 import com.example.socialnetworkgui.utils.observer.Observer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import com.example.socialnetworkgui.domain.User;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -74,8 +76,9 @@ public class UserAccountController implements Observer<FriendshipEntityChangeEve
     public void onAddFriend(){
         try {
             FXMLLoader addLoader = new FXMLLoader(Application.class.getResource("AddFriend.fxml"));
+            Parent root = (Parent) addLoader.load();
             Stage stage = new Stage();
-            stage.setScene(new Scene(addLoader.load()));
+            stage.setScene(new Scene(root));
             stage.setTitle("Add Friend Page");
             AddFriendController addFriendController = addLoader.getController();
             addFriendController.setNetwork(network);
@@ -87,9 +90,10 @@ public class UserAccountController implements Observer<FriendshipEntityChangeEve
 
     public void onRequest(){
         try{
-            FXMLLoader requestLoader = new FXMLLoader(Application.class.getResource("Requests.fxml"));
+            FXMLLoader requestLoader = new FXMLLoader(Application.class.getResource("Request.fxml"));
+            Parent root = (Parent) requestLoader.load();
             Stage stage = new Stage();
-            stage.setScene(new Scene(requestLoader.load()));
+            stage.setScene(new Scene(root));
             stage.setTitle("Requests");
             RequestsController requestsController = requestLoader.getController();
             requestsController.setNetwork(network);
@@ -98,6 +102,24 @@ public class UserAccountController implements Observer<FriendshipEntityChangeEve
         } catch(Exception e){
             labelErrors.setText(e.getMessage());
             System.out.println(e.getMessage());
+        }
+    }
+
+    @FXML
+    protected void onSignOut(ActionEvent actionEvent){
+        try{
+            network.disconnectUser();
+            FXMLLoader signOutLoader = new FXMLLoader(Application.class.getResource("Login.fxml"));
+            Parent root = (Parent) signOutLoader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Log in");
+            LoginController loginController = signOutLoader.getController();
+            loginController.setNetwork(network);
+            stage.show();
+            ((Node)(actionEvent.getSource())).getScene().getWindow().hide();
+        }catch (Exception e){
+            labelErrors.setText(e.getMessage());
         }
     }
 }
