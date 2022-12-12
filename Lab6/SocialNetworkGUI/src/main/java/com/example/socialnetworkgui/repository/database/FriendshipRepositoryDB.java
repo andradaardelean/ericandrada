@@ -43,6 +43,7 @@ public class FriendshipRepositoryDB implements Repository<Friendship, Set<String
                 String username1 = resultSet.getString("username1");
                 String username2 = resultSet.getString("username2");
                 LocalDateTime date = resultSet.getTimestamp("date").toLocalDateTime();
+                //System.out.println("4 " + date);
 
                 User user1 = userRepo.find(username1);
                 User user2 = userRepo.find(username2);

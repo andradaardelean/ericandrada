@@ -1,17 +1,24 @@
 package com.example.socialnetworkgui.controllers;
 
+import com.example.socialnetworkgui.Application;
 import com.example.socialnetworkgui.service.Network;
 import com.example.socialnetworkgui.utils.events.FriendshipEntityChangeEvent;
 import com.example.socialnetworkgui.utils.observer.Observable;
 import com.example.socialnetworkgui.utils.observer.Observer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import com.example.socialnetworkgui.domain.User;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -56,6 +63,21 @@ public class AddFriendController implements Observer<FriendshipEntityChangeEvent
             labelErrors.setText("Request sent!");
         }catch (Exception e){
             labelErrors.setText(e.getMessage());
+        }
+    }
+
+    @FXML
+    public void onBackLabel(ActionEvent actionEvent){
+        try {
+            FXMLLoader backLabelLoader = new FXMLLoader(Application.class.getResource("UserAccountPage.fxml"));
+            Stage stage = new Stage();
+            stage.setScene(new Scene(backLabelLoader.load()));
+            stage.setTitle("");
+            UserAccountController accController = backLabelLoader.getController();
+            accController.setNetwork(network);
+            ((Node) (actionEvent.getSource())).getScene().getWindow().hide();
+        } catch (Exception e){
+            System.out.println("da");;
         }
     }
 

@@ -13,6 +13,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -35,6 +36,9 @@ public class UserAccountController implements Observer<FriendshipEntityChangeEve
     private TableColumn<User, String> emailColumn;
     @FXML
     private Label labelErrors;
+
+    @FXML
+    private Button buttonAddFriend;
 
     public void setNetwork(Network network){
         this.network = network;
@@ -73,7 +77,7 @@ public class UserAccountController implements Observer<FriendshipEntityChangeEve
         }
     }
 
-    public void onAddFriend(){
+    public void onAddFriend(ActionEvent actionEvent){
         try {
             FXMLLoader addLoader = new FXMLLoader(Application.class.getResource("AddFriend.fxml"));
             Parent root = (Parent) addLoader.load();
@@ -83,6 +87,7 @@ public class UserAccountController implements Observer<FriendshipEntityChangeEve
             AddFriendController addFriendController = addLoader.getController();
             addFriendController.setNetwork(network);
             stage.show();
+            //((Node)(actionEvent.getSource())).getScene().getWindow().hide();
         } catch(Exception e){
             labelErrors.setText(e.getMessage());
         }
@@ -110,14 +115,16 @@ public class UserAccountController implements Observer<FriendshipEntityChangeEve
         try{
             network.disconnectUser();
             FXMLLoader signOutLoader = new FXMLLoader(Application.class.getResource("Login.fxml"));
-            Parent root = (Parent) signOutLoader.load();
+
+            Scene scene = new Scene(signOutLoader.load());
             Stage stage = new Stage();
-            stage.setScene(new Scene(root));
             stage.setTitle("Log in");
+            stage.setScene(scene);
+
             LoginController loginController = signOutLoader.getController();
             loginController.setNetwork(network);
             stage.show();
-            ((Node)(actionEvent.getSource())).getScene().getWindow().hide();
+            buttonAddFriend.getScene().getWindow().hide();
         }catch (Exception e){
             labelErrors.setText(e.getMessage());
         }

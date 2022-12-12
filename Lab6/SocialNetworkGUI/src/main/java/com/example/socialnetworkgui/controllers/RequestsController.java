@@ -1,5 +1,6 @@
 package com.example.socialnetworkgui.controllers;
 
+import com.example.socialnetworkgui.domain.Friendship;
 import com.example.socialnetworkgui.domain.User;
 import com.example.socialnetworkgui.exceptions.RepositoryException;
 import com.example.socialnetworkgui.service.Network;
@@ -13,6 +14,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -25,6 +28,8 @@ public class RequestsController implements Observer<FriendshipEntityChangeEvent>
     public TableColumn<User, String> usernameColumn;
     @FXML
     public TableColumn<User, String> emailColumn;
+    @FXML
+    public TableColumn<User, LocalDateTime> dateColumn;
 
     ObservableList<User> model = FXCollections.observableArrayList();
 
@@ -37,7 +42,8 @@ public class RequestsController implements Observer<FriendshipEntityChangeEvent>
     public void initialize(){
         usernameColumn.setCellValueFactory(new PropertyValueFactory<User,String>("username"));
         emailColumn.setCellValueFactory(new PropertyValueFactory<User, String>("email"));
-        System.out.println("dadasdsd");
+        dateColumn.setCellValueFactory(new PropertyValueFactory<User, LocalDateTime>("date"));
+       // System.out.println("dadasdsd");
         tableViewRequests.setItems(model);
     }
 

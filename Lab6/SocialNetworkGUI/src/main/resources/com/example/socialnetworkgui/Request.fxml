@@ -6,21 +6,21 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.socialnetworkgui.controllers.RequestsController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.socialnetworkgui.controllers.RequestsController">
    <children>
       <TableView fx:id="tableViewRequests" layoutX="70.0" layoutY="71.0" prefHeight="258.0" prefWidth="295.0">
         <columns>
-          <TableColumn fx:id="usernameColumn" prefWidth="148.0" text="Username" />
-          <TableColumn fx:id="emailColumn" prefWidth="146.4000244140625" text="Email" />
+          <TableColumn fx:id="usernameColumn" prefWidth="87.20001983642578" text="Username" />
+          <TableColumn fx:id="emailColumn" prefWidth="96.0" text="Email" />
+            <TableColumn fx:id="dateColumn" prefWidth="110.39998168945311" text="Time" />
         </columns>
       </TableView>
-      <Button fx:id="buttonAccept" layoutX="426.0" layoutY="121.0" mnemonicParsing="false" prefHeight="50.0" onAction="#onAcceptRequest" prefWidth="130.0" style="-fx-background-color: pink;" text="Accept Request">
+      <Button fx:id="buttonAccept" layoutX="426.0" layoutY="121.0" mnemonicParsing="false" onAction="#onAcceptRequest" prefHeight="50.0" prefWidth="130.0" style="-fx-background-color: pink;" text="Accept Request">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
-      <Button fx:id="buttonDecline" layoutX="425.0" layoutY="221.0" mnemonicParsing="false" prefHeight="50.0" onAction="#onDeclineRequest" prefWidth="130.0" style="-fx-background-color: pink;" text="Decline Request">
+      <Button fx:id="buttonDecline" layoutX="425.0" layoutY="221.0" mnemonicParsing="false" onAction="#onDeclineRequest" prefHeight="50.0" prefWidth="130.0" style="-fx-background-color: pink;" text="Decline Request">
          <font>
             <Font size="14.0" />
          </font>

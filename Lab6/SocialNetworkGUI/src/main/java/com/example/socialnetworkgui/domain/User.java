@@ -1,6 +1,7 @@
 package com.example.socialnetworkgui.domain;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -9,6 +10,7 @@ public class User implements HasID<String>, Serializable {
     private String username;
     private String password;
     private String email;
+    private LocalDateTime date;
     private List<User> friends;
 
     public User(String username, String password, String email) {
@@ -17,6 +19,10 @@ public class User implements HasID<String>, Serializable {
         this.email = email;
         this.friends = new ArrayList<>();
     }
+
+    public LocalDateTime getDate() {return date;}
+
+    public void setDate(LocalDateTime date){this.date = date;}
 
     public String getUsername() {
         return username;

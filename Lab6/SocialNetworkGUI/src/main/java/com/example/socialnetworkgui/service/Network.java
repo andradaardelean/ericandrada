@@ -56,7 +56,10 @@ public class Network implements Observable<FriendshipEntityChangeEvent> {
             }
         }
         Friendship fr = new Friendship(currentUser,user);
-        System.out.println(fr);
+        //System.out.println(fr);
+        //fr.getU1().setDate(LocalDateTime.now());
+        //System.out.println("2" + fr.getU1().getDate());
+        //System.out.println("3 " + fr.getDate());
         friendshipsRepo.add(fr);
         notifyObservers(new FriendshipEntityChangeEvent(ChangeEventType.ADD, fr));
     }
@@ -65,6 +68,8 @@ public class Network implements Observable<FriendshipEntityChangeEvent> {
         List<User> requests = new ArrayList<>();
         for(Friendship fr : friendshipsRepo.getAll()){
             if(fr.getU2().equals(currentUser) && fr.getPending()){
+                //System.out.println("1" + fr.getDate());
+                fr.getU1().setDate(fr.getDate());
                 requests.add(fr.getU1());
             }
         }
